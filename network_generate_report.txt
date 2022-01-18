@@ -1,0 +1,144 @@
+Neural Network Tools for STM32 v1.4.0 (AI tools v5.2.0)
+Created date       : 2021-11-22 11:46:43
+Parameters         : generate --name network -m G:/My Drive/1. EIT Digital master/Estland/Semester 1/ML for ES/IAS0360_lab_excercises/Homework_2/1. own model/ownmodel7.tflite --type tflite --compression 1 --verbosity 1 --workspace C:\Users\omare\AppData\Local\Temp\mxAI_workspace48617106639650017141334067029761999 --output C:\Users\omare\.stm32cubemx
+
+Exec/report summary (generate dur=0.39s err=0)
+------------------------------------------------------------------------------------------------------------------------
+model file         : G:\My Drive\1. EIT Digital master\Estland\Semester 1\ML for ES\IAS0360_lab_excercises\Homework_2\1. own model\ownmodel7.tflite
+type               : tflite (tflite) 
+c_name             : network
+compression        : None
+quantize           : None
+workspace dir      : C:\Users\omare\AppData\Local\Temp\mxAI_workspace48617106639650017141334067029761999
+output dir         : C:\Users\omare\.stm32cubemx
+
+model_name         : ownmodel7
+model_hash         : 6796a9b5250434abbe8768a2fdc682d2
+input              : serving_default_conv2d_input0 [784 items, 3.06 KiB, ai_float, FLOAT32, (28, 28, 1)]
+inputs (total)     : 3.06 KiB
+output             : nl_10 [10 items, 40 B, ai_float, FLOAT32, (1, 1, 10)]
+outputs (total)    : 40 B
+params #           : 707 items (2.76 KiB)
+macc               : 42,006
+weights (ro)       : 2,828 B (2.76 KiB) 
+activations (rw)   : 2,652 B (2.59 KiB) 
+ram (total)        : 5,828 B (5.69 KiB) = 2,652 + 3,136 + 40
+
+------------------------------------------------------------------------------------------------------------------------
+id  layer (type)                          output shape      param #     connected to             macc           rom                
+------------------------------------------------------------------------------------------------------------------------
+0   serving_default_conv2d_input0 (Input) (28, 28, 1)                                                                              
+    conv2d_0 (Conv2D)                     (26, 26, 3)       30          serving_default_conv2d_i 26,367         120                
+------------------------------------------------------------------------------------------------------------------------
+1   nl_1 (Nonlinearity)                   (26, 26, 3)                   conv2d_0                                                   
+------------------------------------------------------------------------------------------------------------------------
+2   pool_2 (Pool)                         (13, 13, 3)                   nl_1                                                       
+------------------------------------------------------------------------------------------------------------------------
+3   conv2d_3 (Conv2D)                     (11, 11, 4)       112         pool_2                   14,924         448                
+------------------------------------------------------------------------------------------------------------------------
+4   nl_4 (Nonlinearity)                   (11, 11, 4)                   conv2d_3                                                   
+------------------------------------------------------------------------------------------------------------------------
+5   pool_5 (Pool)                         (5, 5, 4)                     nl_4                                                       
+------------------------------------------------------------------------------------------------------------------------
+6   reshape_6 (Reshape)                   (100,)                        pool_5                                                     
+------------------------------------------------------------------------------------------------------------------------
+7   dense_7 (Dense)                       (5,)              505         reshape_6                500            2,020              
+------------------------------------------------------------------------------------------------------------------------
+8   nl_8 (Nonlinearity)                   (5,)                          dense_7                  15                                
+------------------------------------------------------------------------------------------------------------------------
+9   dense_9 (Dense)                       (10,)             60          nl_8                     50             240                
+------------------------------------------------------------------------------------------------------------------------
+10  nl_10 (Nonlinearity)                  (10,)                         dense_9                  150                               
+------------------------------------------------------------------------------------------------------------------------
+ownmodel7 p=707(2.76 KBytes) macc=42006 rom=2.76 KBytes ram=2.59 KiB io_ram=3.10 KiB
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name         : ownmodel7
+c-name             : network
+c-node #           : 6
+c-array #          : 17
+activations size   : 2652
+weights size       : 2828
+macc               : 42006
+inputs             : ['serving_default_conv2d_input0_output_array']
+outputs            : ['nl_10_output_array']
+
+
+C-Arrays (17)
+------------------------------------------------------------------------------------------------------------------------
+c_id  name (*_array)                        item/size           mem-pool     c-type       fmt    comment            
+------------------------------------------------------------------------------------------------------------------------
+0     conv2d_3_scratch0                     88/352              activations  float        float                     
+1     conv2d_0_scratch0                     156/624             activations  float        float                     
+2     dense_9_bias                          10/40               weights      const float  float                     
+3     dense_9_weights                       50/200              weights      const float  float                     
+4     dense_7_bias                          5/20                weights      const float  float                     
+5     dense_7_weights                       500/2000            weights      const float  float                     
+6     conv2d_3_bias                         4/16                weights      const float  float                     
+7     conv2d_3_weights                      108/432             weights      const float  float                     
+8     conv2d_0_bias                         3/12                weights      const float  float                     
+9     conv2d_0_weights                      27/108              weights      const float  float                     
+10    serving_default_conv2d_input0_output  784/3136            user         float        float  /input             
+11    conv2d_0_output                       507/2028            activations  float        float                     
+12    conv2d_3_output                       100/400             activations  float        float                     
+13    dense_7_output                        5/20                activations  float        float                     
+14    nl_8_output                           5/20                activations  float        float                     
+15    dense_9_output                        10/40               activations  float        float                     
+16    nl_10_output                          10/40               user         float        float  /output            
+------------------------------------------------------------------------------------------------------------------------
+
+
+C-Layers (6)
+------------------------------------------------------------------------------------------------------------------------
+c_id  name (*_layer)  id  type              macc        rom         tensors                                  shape (array id)                       
+------------------------------------------------------------------------------------------------------------------------
+0     conv2d_0        0   optimized_conv2d  26367       120         I: serving_default_conv2d_input0_output  [1, 28, 28, 1] (10)                    
+                                                                    S: conv2d_0_scratch0                                                            
+                                                                    W: conv2d_0_weights                                                             
+                                                                    W: conv2d_0_bias                                                                
+                                                                    O: conv2d_0_output                       [1, 13, 13, 3] (11)                    
+------------------------------------------------------------------------------------------------------------------------
+1     conv2d_3        3   optimized_conv2d  14924       448         I: conv2d_0_output                       [1, 13, 13, 3] (11)                    
+                                                                    S: conv2d_3_scratch0                                                            
+                                                                    W: conv2d_3_weights                                                             
+                                                                    W: conv2d_3_bias                                                                
+                                                                    O: conv2d_3_output                       [1, 5, 5, 4] (12)                      
+------------------------------------------------------------------------------------------------------------------------
+2     dense_7         7   dense             500         2020        I: conv2d_3_output0                      [1, 1, 1, 100] (12)                    
+                                                                    W: dense_7_weights                                                              
+                                                                    W: dense_7_bias                                                                 
+                                                                    O: dense_7_output                        [1, 1, 1, 5] (13)                      
+------------------------------------------------------------------------------------------------------------------------
+3     nl_8            8   nl                15          0           I: dense_7_output                        [1, 1, 1, 5] (13)                      
+                                                                    O: nl_8_output                           [1, 1, 1, 5] (14)                      
+------------------------------------------------------------------------------------------------------------------------
+4     dense_9         9   dense             50          240         I: nl_8_output                           [1, 1, 1, 5] (14)                      
+                                                                    W: dense_9_weights                                                              
+                                                                    W: dense_9_bias                                                                 
+                                                                    O: dense_9_output                        [1, 1, 1, 10] (15)                     
+------------------------------------------------------------------------------------------------------------------------
+5     nl_10           10  nl                150         0           I: dense_9_output                        [1, 1, 1, 10] (15)                     
+                                                                    O: nl_10_output                          [1, 1, 1, 10] (16)                     
+------------------------------------------------------------------------------------------------------------------------
+
+
+ 
+Complexity per-layer - macc=42,006 rom=2,828
+------------------------------------------------------------------------------------------------------------------------
+id      layer (type)                          macc                                    rom                                    
+------------------------------------------------------------------------------------------------------------------------
+0       conv2d_0 (Conv2D)                     |||||||||||||||||||||||||||||||  62.8%  ||                                4.2% 
+3       conv2d_3 (Conv2D)                     |||||||||||||||||                35.5%  |||||||                          15.8% 
+7       dense_7 (Dense)                       |                                 1.2%  |||||||||||||||||||||||||||||||  71.4% 
+8       nl_8 (Nonlinearity)                   |                                 0.0%  |                                 0.0% 
+9       dense_9 (Dense)                       |                                 0.1%  ||||                              8.5% 
+10      nl_10 (Nonlinearity)                  |                                 0.4%  |                                 0.0% 
+------------------------------------------------------------------------------------------------------------------------
+
+
+Evaluation report (summary)
+---------------------------------------------
+NOT EVALUATED
